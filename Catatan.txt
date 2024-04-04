@@ -1,0 +1,21 @@
+--------------> Init Env <--------------
+python -m venv .venv
+
+--------------> Intall Library <--------------
+pip install -r requirements.txt
+
+---------------> Activate Env <---------------
+.venv\Scripts\activate
+
+-----------------> Run App <-----------------
+python app.py
+
+-------------> Deactivate Env <-------------
+deactivate
+
+-------------> Database Migration <-------------
+flask db migrate -m "init"
+flask db upgrade
+flask seed run
+
+https://www.youtube.com/watch?v=lgtOwjD-P1c&list=PLxYRczqMg8Qp--KSMvRiTnPgTPSwGLoq6&index=2
