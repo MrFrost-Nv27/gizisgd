@@ -1,0 +1,49 @@
+<div class="top-bar">
+    <div class="top-profile">
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+        </a>
+        <div class="hide-on-med-and-down">
+            <h3 class="title">ANT COLONY</h3>
+            <p class="sub-title">Implementasi ant colony</p>
+        </div>
+        <div class="profile-view">
+            <div class="profile-detail hide-on-med-and-down">
+            </div>
+            <div class="profile-image">
+                <a class='dropdown-trigger' href='#' data-target='dropdown-profile'><img class="circle"
+                        src="{{ url_for('static', filename='img/profil/avatar.jpg' )}}" alt="avatar"></a>
+                <ul id='dropdown-profile' class='dropdown-content'>
+                    <li>
+                        <a id="logout-button" href="#!">Keluar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="top-nav hide-on-med-and-down">
+        <ul>
+            <li class="waves-effect waves-light" data-page="dashboard">
+                <a href="{{ url_for('views.home') }}">Dashboard</a>
+            </li>
+            <li class="waves-effect waves-light" data-page="gizi">
+                <a href="{{ url_for('views.gizi') }}">Pemeriksaan Gizi</a>
+            </li>
+            <li class="waves-effect waves-light" data-page="implementasi">
+                <a href="{{ url_for('views.implementasi') }}">Implementasi</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li data-page="dashboard">
+        <a href="{{ url_for('views.home') }}">Dashboard</a>
+    </li>
+    <li data-page="gizi">
+        <a href="{{ url_for('views.gizi') }}">Pemeriksaan Gizi</a>
+    </li>
+    <li data-page="implementasi">
+        <a href="{{ url_for('views.implementasi') }}">Implementasi</a>
+    </li>
+</ul>

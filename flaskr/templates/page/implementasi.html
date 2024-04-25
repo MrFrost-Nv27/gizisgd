@@ -1,0 +1,300 @@
+{% extends "layout/panel.html" %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/page/implementasi.css')}}">
+{% endblock %}
+{% block inside %}
+<div class="row">
+    <div class="col s12">
+        <div class="card-panel orange darken-3 blank-data hide">
+            <span class="white-text">Belum ada data destinasi yang ditambahkan! untuk dapat mengimplementasikan
+                algoritma, anda harus menambahkan destinasi terlebih dahulu.</span>
+        </div>
+        <div class="implementor-wrapper hide">
+            <div class="implementor-page">
+                <div class="title">
+                    <p></p>
+                    <small></small>
+                </div>
+                <div class="content">
+                </div>
+                <div class="control">
+                    <div class="c-left">
+                        <a class="waves-effect waves-light btn btn-prev"><i
+                                class="material-icons left">chevron_left</i>Sebelummnya</a>
+                    </div>
+                    <div class="c-mid"></div>
+                    <div class="c-right">
+                        <a class="waves-effect waves-light btn btn-next"><i
+                                class="material-icons right">chevron_right</i>Berikutnya</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<template id="page1">
+    <div class="choose-wrapper">
+    </div>
+    <a role="button" href="#!" class="f-button green darken-3 waves-effect waves-light"><span class="material-icons">
+            checklist
+        </span></a>
+</template>
+<template id="page2">
+    <div class="center-wrapper">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p class="center">Menginisiasi rute destinasi...</p>
+    </div>
+</template>
+<template id="page3">
+    <div id="startmap"></div>
+    <form method="POST" id="form-start">
+        <div class="input-field col s12">
+            <select id="id_start" name="id_start">
+                <option value="" disabled selected>Pilih titik awal Destinasi</option>
+            </select>
+        </div>
+    </form>
+</template>
+<template id="page4">
+    <div class="container">
+        <form method="POST" id="form-param">
+            <div class="input-field col s12">
+                <input id="aco_iteration" name="aco_iteration" type="number" min="1" class="validate" required>
+                <label for="aco_iteration">Iterasi</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="aco_ants" name="aco_ants" type="number" min="1" class="validate" required>
+                <label for="aco_ants">Banyaknya Semut (Ant)</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="aco_e" name="aco_e" type="number" min="0.01" step="0.01" class="validate" required>
+                <label for="aco_e">Nilai Evaporation Rate</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="aco_alpha" name="aco_alpha" type="number" min="0.01" step="0.01" class="validate" required>
+                <label for="aco_alpha">Nilai Faktor Pheromone</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="aco_beta" name="aco_beta" type="number" min="0.01" step="0.01" class="validate" required>
+                <label for="aco_beta">Nilai Faktor Visibility</label>
+            </div>
+        </form>
+    </div>
+</template>
+<template id="page5">
+    <div class="center-wrapper">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <p class="center">Memproses algoritma Ant Colony Optimization...</p>
+    </div>
+    <div class="result-wrapper">
+        <div id="result-map"></div>
+        <div class="result-desc">
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">tune</i>Parameter Algoritma</div>
+                    <div class="collapsible-body">
+                        <table class="result-parameter highlight">
+                            <tbody>
+                                <tr>
+                                    <th>Destinasi</th>
+                                    <td>:</td>
+                                    <td>
+                                        <ul class="collection" id="destinasi">
+                                            <li class="collection-item">
+                                                <div>Alvin</div>
+                                            </li>
+                                            <li class="collection-item">
+                                                <div>Alvin</div>
+                                            </li>
+                                            <li class="collection-item">
+                                                <div>Alvin</div>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Iteration</th>
+                                    <td>:</td>
+                                    <td id="aco_iteration"></td>
+                                </tr>
+                                <tr>
+                                    <th>Jumlah Ants</th>
+                                    <td>:</td>
+                                    <td id="aco_ants"></td>
+                                </tr>
+                                <tr>
+                                    <th>Evaporation Rate</th>
+                                    <td>:</td>
+                                    <td id="aco_e"></td>
+                                </tr>
+                                <tr>
+                                    <th>Pheromne Factor</th>
+                                    <td>:</td>
+                                    <td id="aco_alpha"></td>
+                                </tr>
+                                <tr>
+                                    <th>Visibility Factor</th>
+                                    <td>:</td>
+                                    <td id="aco_beta"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">analytics</i>Diagram Hasil Jarak</div>
+                    <div class="collapsible-body">
+                        <div width="100%"><canvas id="all-distances"></canvas></div>
+                        <br>
+                        <div width="100%"><canvas id="best-distances"></canvas></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">route</i>Semua Rute</div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible" id="all-routes">
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">roundabout_right</i>Iterasi 1
+                                </div>
+                                <div class="collapsible-body">
+                                    <ul class="collection">
+                                        <li class="collection-item route-wrapper">
+                                            <div class="route">
+                                                <span class="green darken-3">Kota asdsad a asasdasd </span>
+                                                <span class="green darken-3">Kota b</span>
+                                                <span class="green darken-3">Kota c</span>
+                                            </div>
+                                            <div class="distance"><span class="green darken-3">1.000 m</span></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="active">
+                    <div class="collapsible-header"><i class="material-icons">electric_bolt</i>Rute Tercepat</div>
+                    <div class="collapsible-body">
+                        <div class="center">
+                            <a class="waves-effect waves-light btn">Tampilkan Rute</a>
+                        </div>
+                        <hr>
+                        <ul class="collection fastest-route">
+                            <li class="collection-item">
+                                <div class="route">
+                                    <div class="place">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem ab
+                                        officiis aperiam voluptates obcaecati aliquam dignissimos doloremque, dolores,
+                                        numquam ullam explicabo modi. Fuga aut eius iste temporibus similique saepe
+                                        voluptatum.</div>
+                                    <div class="strip"><span class="material-icons">
+                                            arrow_forward
+                                        </span></div>
+                                    <div class="place to">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem
+                                        ab officiis aperiam voluptates obcaecati aliquam dignissimos doloremque,
+                                        dolores, numquam ullam explicabo modi. Fuga aut eius iste temporibus similique
+                                        saepe voluptatum.</div>
+                                </div>
+                                <div class="distance">6000 m</div>
+                            </li>
+                        </ul>
+                        <p class="center jarak"><b>Total Jarak : <span>6000 m</span></b></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/page/implementasi.js')}}"></script>
+{% endblock %}
