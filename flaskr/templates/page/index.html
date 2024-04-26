@@ -21,20 +21,8 @@
 
 {% endblock %}
 {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"
-    integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(async function () {
-        await cloud.add("/api/destinasi", {
-            name: "destinasi",
-        });
-        await cloud.add("/api/distrik", {
-            name: "distrik",
-        });
-        $('#count-distrik').text(cloud.get("distrik").data.length).counterUp();
-        $('#count-destinasi').text(cloud.get("destinasi").data.length).counterUp();
     });
 </script>
 {% endblock %}

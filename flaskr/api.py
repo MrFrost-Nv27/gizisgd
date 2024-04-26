@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from . import db
 from .models import Gizi
 import numpy as np
+import pandas as pd
 
 api = Blueprint("api", __name__)
 
@@ -24,7 +25,10 @@ def gizi():
         }, "data": Gizi.serialize()}, 200
     
     data = Gizi.query.all()
-    return {"data": [k.serialize() for k in data]}, 200
+    dataframe = pd.DataFrame.from_records([data.serialize() for data in data])
+    # return {"data": [k.serialize() for k in data]}, 200
+
+    return {"data": dataframe.to_dict("records")}, 200
 
 # @api.route("/implementasi", methods=["POST"])
 # def implementasi():

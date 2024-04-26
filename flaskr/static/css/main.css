@@ -1,27 +1,12 @@
 :root {
   --main-color: #4caf50;
+  --main-gradient: linear-gradient(109.6deg, rgb(9, 154, 151) 11.2%, rgb(21, 205, 168) 91.1%);
   --code-color: darkred;
   --code-bg-color: #aaaaaa;
   --code-font-size: 14px;
   --code-line-height: 1.4;
   --scroll-bar-color: #c5c5c5;
   --scroll-bar-bg-color: #f6f6f6;
-}
-
-.preview-card-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 1rem;
-  background-color: white;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  color: var(--main-color);
-}
-
-.preview-card-link:hover {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 pre {
@@ -62,4 +47,32 @@ pre {
   background-color: var(--scroll-bar-color);
   border-radius: 20px;
   border: 3px solid var(--scroll-bar-bg-color);
+}
+
+.page-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: var(--main-gradient);
+  overflow: auto;
+}
+
+.page-wrapper .page-box {
+  position: relative;
+  background-color: white;
+  width: 90%;
+  max-width: 60rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  border-radius: 1rem;
+  margin: 0;
+  padding: 1rem;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
+  transition: all ease 0.3s;
 }

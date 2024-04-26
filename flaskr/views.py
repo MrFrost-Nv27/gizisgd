@@ -19,19 +19,3 @@ def home():
         "page/index.html",
         page="dashboard",
     )
-
-
-@views.route("/gizi")
-def gizi():
-    return render_template(
-        "page/gizi.html",
-        page="gizi",
-    )
-
-
-@views.route("/implementasi")
-def implementasi():
-    return render_template(
-        "page/implementasi.html",
-        page="implementasi",
-    )
