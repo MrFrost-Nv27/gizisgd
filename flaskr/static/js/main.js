@@ -210,4 +210,6 @@ $jscomp.polyfill(
 $(document).ready(function () {
   $(".datatables-init").DataTable();
   $("select").formSelect();
+  $(".page-nav").removeClass("active");
+  $(`.page-nav[data-page="${page}"]`).addClass("active");
 });

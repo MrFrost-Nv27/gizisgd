@@ -1,6 +1,7 @@
 :root {
   --main-color: #4caf50;
-  --main-gradient: linear-gradient(109.6deg, rgb(9, 154, 151) 11.2%, rgb(21, 205, 168) 91.1%);
+  --main-gradient: linear-gradient(to right, #4b6cb7, #182848);
+  --hover-gradient: linear-gradient(to right, #4b6cb7, #182848);
   --code-color: darkred;
   --code-bg-color: #aaaaaa;
   --code-font-size: 14px;
@@ -69,10 +70,102 @@ pre {
   height: 90%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   border-radius: 1rem;
   margin: 0;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
   transition: all ease 0.3s;
+}
+
+.page-wrapper .page-box .page-nav-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  border-bottom: 1px solid black;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+.page-wrapper .page-box .page-nav-wrapper .page-nav {
+  color: black;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 1rem;
+  padding: 0.25rem 1rem;
+  border: 1px solid #182848;
+  color: #182848;
+  transition: all ease 0.3s;
+  background: white;
+}
+.page-wrapper .page-box .page-nav-wrapper .page-nav span {
+  transition: all ease 0.3s;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.page-wrapper .page-box .page-nav-wrapper .page-nav.active {
+  background: var(--main-gradient);
+  color: white;
+  pointer-events: none;
+}
+.page-wrapper .page-box .page-nav-wrapper .page-nav.active span {
+  width: 100%;
+}
+.page-wrapper .page-box .page-nav-wrapper .page-nav:not(.active):hover {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+.page-wrapper .page-box .page-nav-wrapper .page-nav:not(.active):hover span {
+  width: 100%;
+}
+.page-wrapper .page-box .page-nav-wrapper .page-nav:not(.active):active {
+  transform: scale(0.95);
+}
+
+.page-wrapper .page-box .page-content {
+  flex: 1;
+  overflow: auto;
+}
+.page-wrapper .page-box .page-content p,
+.page-wrapper .page-box .page-content h1,
+.page-wrapper .page-box .page-content h2,
+.page-wrapper .page-box .page-content h3,
+.page-wrapper .page-box .page-content h4,
+.page-wrapper .page-box .page-content h5,
+.page-wrapper .page-box .page-content h6
+{
+  padding: 0;
+  margin: 0;
+}
+.count-card {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  cursor: pointer;
+  padding: 1rem;
+  width: 100%;
+  height: 4rem;
+  overflow: hidden;
+  transition: all ease 0.3s;
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+}
+.count-card:hover {
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+}
+.count-card p {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.count-card .number {
+  font-weight: bold;
+  font-size: large;
 }
