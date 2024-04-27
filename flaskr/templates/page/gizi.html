@@ -1,0 +1,39 @@
+{% extends "layout/panel.html" %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col s12 center">
+        <a class="waves-effect waves-light btn green btn-slider" data-target="form" data-action="add"><i class="material-icons left">add</i>Tambah</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <table class="striped highlight responsive-table" id="table-gizi" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Gender</th>
+                    <th>Usia</th>
+                    <th>Berat Badan</th>
+                    <th>Tinggi Badan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="page-slider" data-page="form">
+    <div class="slider-nav">
+        <a class="waves-effect waves-light btn orange btn-slider-close"><i class="material-icons left">arrow_back</i>Kembali</a>
+    </div>
+    <div class="slider-content">
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/page/gizi.js') }}"></script>
+{% endblock %}
