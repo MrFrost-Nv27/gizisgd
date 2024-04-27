@@ -28,6 +28,7 @@ class SoftDeleteMixin(generate_soft_delete_mixin_class(
 # Apply the mixin to your Models
 Base = declarative_base()
 
+
 class Gizi(db.Model, SerializerMixin, SoftDeleteMixin):
     __tablename__ = "gizi"
     id = db.Column(db.Integer, primary_key=True)
@@ -51,4 +52,46 @@ class Gizi(db.Model, SerializerMixin, SoftDeleteMixin):
             "weight": self.weight,
             "height": self.height,
             "status": self.status,
+        }
+
+
+class Models(db.Model, SerializerMixin, SoftDeleteMixin):
+    __tablename__ = "models"
+    id = db.Column(db.Integer, primary_key=True)
+    loss = db.Column(db.Text, nullable=False)
+    alpha = db.Column(db.Double, nullable=False)
+    max_iter = db.Column(db.Integer, nullable=False)
+    testsize = db.Column(db.Double, nullable=True, default=0)
+    accuracy = db.Column(db.Double, nullable=True, default=0)
+    results = db.relationship("Results", back_populates="model")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "loss": self.loss,
+            "alpha": self.alpha,
+            "max_iter": self.max_iter,
+            "testsize": self.testsize,
+            "accuracy": self.accuracy,
+            "results": [res.serialize() for res in self.results]
+        }
+
+
+class Results(db.Model, SerializerMixin, SoftDeleteMixin):
+    __tablename__ = "results"
+    id = db.Column(db.Integer, primary_key=True)
+    model_id = db.Column(db.Integer, db.ForeignKey("models.id"))
+    model = db.relationship("Models", back_populates="results")
+    fold = db.Column(db.Integer, nullable=True)
+    actual = db.Column(db.Text, nullable=True)
+    predicted = db.Column(db.Text, nullable=True)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "model_id": self.model_id,
+            "model": self.model.serialize(),
+            "fold": self.fold,
+            "actual": self.actual,
+            "predicted": self.predicted,
         }

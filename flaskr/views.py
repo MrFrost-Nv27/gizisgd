@@ -26,3 +26,10 @@ def gizi():
         "page/gizi.html",
         page="gizi",
     )
+
+@views.route("/model")
+def model():
+    return render_template(
+        "page/model.html",
+        page="model",
+    )

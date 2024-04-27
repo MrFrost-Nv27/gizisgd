@@ -1,0 +1,116 @@
+{% extends "layout/panel.html" %}
+{% block content %}
+<br>
+<div class="row">
+    <div class="col s12 center">
+        <a class="waves-effect waves-light btn green btn-slider" data-target="form" data-action="add"><i
+                class="material-icons left">add</i>Tambah</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <table class="striped highlight responsive-table" id="table-gizi" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Gender</th>
+                    <th>Usia</th>
+                    <th>Berat Badan</th>
+                    <th>Tinggi Badan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="page-slider" data-page="form">
+    <div class="slider-nav">
+        <a class="waves-effect waves-light btn orange btn-slider-close"><i
+                class="material-icons left">arrow_back</i>Kembali</a>
+    </div>
+    <div class="slider-content">
+        <form action="#!" method="POST">
+            <input type="hidden" name="id" value="">
+            <div class="row">
+                <div class="col s12 m6 offset-m3">
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="name" name="name" type="text" class="validate" required>
+                            <label for="name">Nama Balita</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="age" name="age" type="number" class="validate" min="0" required>
+                            <label for="age">Usia (Bulan)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <select name="gender">
+                                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                <option value="true">Laki-laki</option>
+                                <option value="false">Perempuan</option>
+                            </select>
+                            <label>Distrik</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="born_weight" name="born_weight" type="number" class="validate" min="0.1"
+                                step="0.1" required>
+                            <label for="born_weight">Berat Badan Lahir (Kg)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="born_height" name="born_height" type="number" class="validate" min="0.1"
+                                step="0.1" required>
+                            <label for="born_height">Tinggi Badan Lahir (Cm)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="weight" name="weight" type="number" class="validate" min="0.1" step="0.1"
+                                required>
+                            <label for="weight">Berat Badan Periksa (Kg)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="height" name="height" type="number" class="validate" min="0.1" step="0.1"
+                                required>
+                            <label for="height">Tinggi Badan Periksa (Cm)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <select name="status">
+                                <option value="" disabled selected>Pilih Status Gizi</option>
+                                <option value="Gizi Buruk">Gizi Buruk</option>
+                                <option value="Gizi Kurang">Gizi Kurang</option>
+                                <option value="Gizi Baik">Gizi Baik</option>
+                                <option value="Risiko Gizi Lebih">Beresiko Gizi Lebih</option>
+                                <option value="Gizi Lebih">Gizi Lebih</option>
+                                <option value="Obesitas">Obesitas</option>
+                            </select>
+                            <label>Distrik</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12 center">
+                            <button class="btn waves-effect waves-light green darken-3" type="submit">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/page/model.js') }}"></script>
+{% endblock %}

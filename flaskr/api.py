@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from . import db
-from .models import Gizi
+from .models import Gizi, Results, Models
 import numpy as np
 import pandas as pd
 
@@ -28,6 +28,22 @@ def gizi():
         }, "data": gizi.serialize()}, 200
 
     data = Gizi.query.all()
+    dataframe = pd.DataFrame.from_records([data.serialize() for data in data])
+    # return {"data": [k.serialize() for k in data]}, 200
+
+    return {"data": dataframe.to_dict("records")}, 200
+
+@api.route("/model", methods=["GET"])
+def model():
+    # if request.method == 'POST':
+    #     db.session.add(gizi)
+    #     db.session.commit()
+    #     return {"toast": {
+    #         "icon": "success",
+    #         "title": "Data baru berhasil ditambahkan"
+    #     }, "data": gizi.serialize()}, 200
+
+    data = Models.query.all()
     dataframe = pd.DataFrame.from_records([data.serialize() for data in data])
     # return {"data": [k.serialize() for k in data]}, 200
 

@@ -29,6 +29,6 @@ def create_app(config_class=Config):
     except OSError:
         pass
 
-    from .models import Gizi
+    from .models import Gizi, Results, Models
 
     return app
