@@ -207,26 +207,39 @@ $jscomp.polyfill(
   return d;
 });
 
-$("body").on("click", ".btn-slider", function (e) {
-  e.preventDefault();
+$("body").on("click", ".btn-slider", function (btn) {
+  btn.preventDefault();
   const page = $(this).data("target");
   const action = $(this).data("action");
   if (page) {
     $(`.page-slider[data-page="${page}"]`).addClass("active");
   }
-  $(".page-slider").trigger("open", [page, action]);
+  $(".page-slider").trigger("open", [
+    {
+      page: page,
+      action: action,
+      el: btn,
+    },
+  ]);
 });
-$("body").on("click", ".btn-slider-close", function (e) {
+$("body").on("click", ".btn-slider-close", function (btn) {
+  btn.preventDefault();
   $(this).closest(".page-slider").removeClass("active");
   const page = $(this).closest(".page-slider").data("page");
-  $(".page-slider").trigger("close", [page, "close"]);
+  $(".page-slider").trigger("close", [
+    {
+      page: page,
+      action: "close",
+      el: btn,
+    },
+  ]);
 });
 
-$("body").on("open", ".page-slider", function (e, page, action) {
-  console.log(e, page, action);
+$("body").on("open", ".page-slider", function (e, data) {
+  console.log(e, data);
 });
-$("body").on("close", ".page-slider", function (e, page, action) {
-  console.log(e, page, action);
+$("body").on("close", ".page-slider", function (e, data) {
+  console.log(e, data);
 });
 
 $(document).ready(function () {
