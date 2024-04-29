@@ -9,14 +9,13 @@
 </div>
 <div class="row">
     <div class="col s12">
-        <table class="striped highlight responsive-table" id="table-gizi" style="width:100%">
+        <table class="striped highlight responsive-table" id="table-model" style="width:100%">
             <thead>
                 <tr>
-                    <th>Nama</th>
-                    <th>Gender</th>
-                    <th>Usia</th>
-                    <th>Berat Badan</th>
-                    <th>Tinggi Badan</th>
+                    <th>Model Dibuat</th>
+                    <th>Model Dilatih</th>
+                    <th>Test Size / K-Fold</th>
+                    <th>Akurasi</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -32,71 +31,46 @@
     </div>
     <div class="slider-content">
         <form action="#!" method="POST">
-            <input type="hidden" name="id" value="">
             <div class="row">
                 <div class="col s12 m6 offset-m3">
                     <div class="row">
                         <div class="input-field s12">
-                            <input id="name" name="name" type="text" class="validate" required>
-                            <label for="name">Nama Balita</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field s12">
-                            <input id="age" name="age" type="number" class="validate" min="0" required>
-                            <label for="age">Usia (Bulan)</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field s12">
-                            <select name="gender">
-                                <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                                <option value="true">Laki-laki</option>
-                                <option value="false">Perempuan</option>
+                            <select name="loss">
+                                <option value="" disabled selected>Pilih Loss Function</option>
+                                <option value="hinge">Hinge</option>
+                                <option value="log_loss">Log loss</option>
+                                <option value="modified_huber">Modified huber</option>
+                                <option value="squared_hinge">Squared hinge</option>
+                                <option value="perceptron">Perceptron</option>
+                                <option value="squared_error">Squared error</option>
+                                <option value="huber">Huber</option>
+                                <option value="epsilon_insensitive">Epsilon insensitive</option>
+                                <option value="squared_epsilon_insensitive">Squared epsilon insensitive</option>
                             </select>
                             <label>Distrik</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field s12">
-                            <input id="born_weight" name="born_weight" type="number" class="validate" min="0.1"
-                                step="0.1" required>
-                            <label for="born_weight">Berat Badan Lahir (Kg)</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field s12">
-                            <input id="born_height" name="born_height" type="number" class="validate" min="0.1"
-                                step="0.1" required>
-                            <label for="born_height">Tinggi Badan Lahir (Cm)</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field s12">
-                            <input id="weight" name="weight" type="number" class="validate" min="0.1" step="0.1"
+                            <input id="alpha" name="alpha" type="number" class="validate" min="0.0001" step="0.0001"
                                 required>
-                            <label for="weight">Berat Badan Periksa (Kg)</label>
+                            <label for="alpha">Learning Rate</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field s12">
-                            <input id="height" name="height" type="number" class="validate" min="0.1" step="0.1"
+                            <input id="max_iter" name="max_iter" type="number" class="validate" min="1" step="1"
                                 required>
-                            <label for="height">Tinggi Badan Periksa (Cm)</label>
+                            <label for="max_iter">Itereasi Maksimal</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field s12">
-                            <select name="status">
-                                <option value="" disabled selected>Pilih Status Gizi</option>
-                                <option value="Gizi Buruk">Gizi Buruk</option>
-                                <option value="Gizi Kurang">Gizi Kurang</option>
-                                <option value="Gizi Baik">Gizi Baik</option>
-                                <option value="Risiko Gizi Lebih">Beresiko Gizi Lebih</option>
-                                <option value="Gizi Lebih">Gizi Lebih</option>
-                                <option value="Obesitas">Obesitas</option>
-                            </select>
-                            <label>Distrik</label>
+                            <input id="testsize" name="testsize" type="number" class="validate" min="0.1" step="0.1"
+                                required>
+                            <label for="testsize">Ukuran Data Testing / K-Fold</label>
+                            <span class="helper-text">Gunakan angka desimal untuk merepresentasikan persentase data
+                                testing atau gunakan angka bulat diatas 1 untuk menggunakan K-Fold</span>
                         </div>
                     </div>
                     <div class="row">
@@ -109,8 +83,34 @@
         </form>
     </div>
 </div>
+<div class="page-slider" data-page="learning">
+    <div class="slider-nav">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+    <div class="slider-content">
+        <div class="container model-loader">
+            <img class="model-loader" src="{{ url_for('static', filename='img/loader/2.gif')}}" alt="loader">
+            <br><br>
+            <p class="model-loader"><em>Sedang Menjalankan Proses Pelatihan...</em></p>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}
+<script>
+    const loader_urls = [
+        `{{ url_for('static', filename='img/loader/1.gif')}}`,
+        `{{ url_for('static', filename='img/loader/2.gif')}}`,
+    ]
+    const loader_text = [
+        `Sedang Menjalankan Proses Pelatihan...`,
+        `Harap Bersabar...`,
+        `Kami Jalankan Proses ini secara otomatis di belakang layar...`,
+        `Nikmati kopi anda terlebih dahulu...`,
+    ]
+</script>
 <script src="{{ url_for('static', filename='js/page/model.js') }}"></script>
 {% endblock %}

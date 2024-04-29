@@ -63,7 +63,8 @@ class Models(db.Model, SerializerMixin, SoftDeleteMixin):
     max_iter = db.Column(db.Integer, nullable=False)
     testsize = db.Column(db.Double, nullable=True, default=0)
     accuracy = db.Column(db.Double, nullable=True, default=0)
-    results = db.relationship("Results", back_populates="model")
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    learning_at = db.Column(db.DateTime(timezone=True), server_default=None)
 
     def serialize(self):
         return {
@@ -73,7 +74,8 @@ class Models(db.Model, SerializerMixin, SoftDeleteMixin):
             "max_iter": self.max_iter,
             "testsize": self.testsize,
             "accuracy": self.accuracy,
-            "results": [res.serialize() for res in self.results]
+            "created_at": self.created_at,
+            "learning_at": self.learning_at
         }
 
 
@@ -81,7 +83,6 @@ class Results(db.Model, SerializerMixin, SoftDeleteMixin):
     __tablename__ = "results"
     id = db.Column(db.Integer, primary_key=True)
     model_id = db.Column(db.Integer, db.ForeignKey("models.id"))
-    model = db.relationship("Models", back_populates="results")
     fold = db.Column(db.Integer, nullable=True)
     actual = db.Column(db.Text, nullable=True)
     predicted = db.Column(db.Text, nullable=True)
@@ -90,7 +91,6 @@ class Results(db.Model, SerializerMixin, SoftDeleteMixin):
         return {
             "id": self.id,
             "model_id": self.model_id,
-            "model": self.model.serialize(),
             "fold": self.fold,
             "actual": self.actual,
             "predicted": self.predicted,

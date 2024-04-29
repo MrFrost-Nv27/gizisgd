@@ -213,20 +213,28 @@ $("body").on("click", ".btn-slider", function (btn) {
   const action = $(this).data("action");
   if (page) {
     $(`.page-slider[data-page="${page}"]`).addClass("active");
+    $(`.page-slider[data-page="${page}"]`).trigger("open", [
+      {
+        page: page,
+        action: action,
+        el: btn,
+      },
+    ]);
+  } else {
+    $(`.page-slider`).trigger("open", [
+      {
+        page: null,
+        action: action,
+        el: btn,
+      },
+    ]);
   }
-  $(".page-slider").trigger("open", [
-    {
-      page: page,
-      action: action,
-      el: btn,
-    },
-  ]);
 });
 $("body").on("click", ".btn-slider-close", function (btn) {
   btn.preventDefault();
   $(this).closest(".page-slider").removeClass("active");
   const page = $(this).closest(".page-slider").data("page");
-  $(".page-slider").trigger("close", [
+  $(`.page-slider[data-page="${page}"]`).trigger("close", [
     {
       page: page,
       action: "close",
