@@ -40,31 +40,73 @@ const tables = {
 };
 
 $("body").on("open", ".page-slider", function (e, data) {
-  if (data.page) {
+  if (data.page == "form") {
     $(e.currentTarget).find("form")[0].reset();
     M.updateTextFields();
     $("select").formSelect();
   }
   switch (data.action) {
-    case "edit":
+    case "detail":
       id = $(data.el.currentTarget).data("id");
-      $(e.currentTarget).find("form input[name=id]").val(id);
-      row = cloud.get("gizi").data.find((x) => x.id == id);
-      $.each(row, function (k, v) {
-        $(e.currentTarget)
-          .find("form input[name=" + k + "]")
-          .val(v);
-        $(e.currentTarget)
-          .find("form select[name=" + k + "]")
-          .val(v);
-        if (k == "gender") {
-          $(e.currentTarget)
-            .find("form select[name=" + k + "]")
-            .val(v == true ? "true" : "false");
-        }
+      row = cloud.get("model").data.find((x) => x.id == id);
+      console.log(row);
+      $.ajax({
+        type: "GET",
+        url: "/api/model/data/" + id,
+        success: (results) => {
+          results = results.data;
+          console.log(results);
+          $(`span.loss`).text(row.loss);
+          $(`span.alpha`).text(row.alpha);
+          $(`span.max_iter`).text(row.max_iter);
+          $(`span.testsize`).text(row.testsize > 1 ? row.testsize + " Fold" : row.testsize * 100 + " %");
+          $(`span.accuracy`).text(row.accuracy);
+          if (row.testsize > 1) {
+            $(`.row.tts`).addClass("hide");
+            $(`.row.kfold`).removeClass("hide");
+            $(`.row.kfold table tbody`).empty();
+            const accuracy = [];
+            for (let k = 0; k < row.testsize; k++) {
+              const ds = results.filter((x) => x.fold == k);
+              const pred = {
+                benar: 0,
+                salah: 0,
+              };
+              ds.map((x) => {
+                if (x.actual == x.predicted) {
+                  pred.benar += 1;
+                } else {
+                  pred.salah += 1;
+                }
+              });
+              accuracy[k] = pred.benar / ds.length;
+              $(`.row.kfold table tbody`).append(`<tr><td>${k + 1}</td><td>${pred.benar}</td><td>${pred.salah}</td><td>${ds.length}</td><td>${accuracy[k]}</td></tr>`);
+            }
+            const highest = accuracy.indexOf(Math.max(...accuracy));
+            const lowest = accuracy.indexOf(Math.min(...accuracy));
+            $(`.row.kfold table tbody tr`).eq(highest).addClass("highest");
+            $(`.row.kfold table tbody tr`).eq(lowest).addClass("lowest");
+            console.log(accuracy, highest, lowest);
+          } else {
+            $(`.row.kfold`).addClass("hide");
+            $(`.row.tts`).removeClass("hide");
+            const pred = {
+              benar: 0,
+              salah: 0,
+            };
+            results.map((x) => {
+              if (x.actual == x.predicted) {
+                pred.benar += 1;
+              } else {
+                pred.salah += 1;
+              }
+            });
+            const accuracy = pred.benar / results.length;
+            $(`.row.tts table tbody`).empty();
+            $(`.row.tts table tbody`).append(`<tr><td>${row.testsize * 100} %</td><td>${pred.benar}</td><td>${pred.salah}</td><td>${results.length}</td><td>${accuracy}</td></tr>`);
+          }
+        },
       });
-      M.updateTextFields();
-      $("select").formSelect();
       break;
     case "run":
       id = $(data.el.currentTarget).data("id");
@@ -127,9 +169,11 @@ $("body").on("submit", ".page-slider[data-page=form] form", function (e) {
 });
 
 $("body").on("close", ".page-slider", function (e, data) {
-  $(e.currentTarget).find("form")[0].reset();
-  M.updateTextFields();
-  $("select").formSelect();
+  if (data.page == "form") {
+    $(e.currentTarget).find("form")[0].reset();
+    M.updateTextFields();
+    $("select").formSelect();
+  }
 });
 
 $(document).ready(async function () {

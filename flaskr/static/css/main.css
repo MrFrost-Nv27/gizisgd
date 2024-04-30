@@ -238,3 +238,16 @@ pre {
 img.model-loader {
   height: 10rem;
 }
+
+.kfold table tr.highest {
+  background-color: rgb(0, 135, 61);
+  color: white;
+}
+.kfold table tr.lowest {
+  background-color: rgb(255, 30, 0);
+  color: white;
+}
+
+.nothing img {
+  width: 60%;
+}

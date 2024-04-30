@@ -1,0 +1,99 @@
+{% extends "layout/panel.html" %}
+{% block content %}
+<br>
+<div class="nothing center hide">
+    <img src="{{ url_for('static', filename='img/empty.png') }}" alt="nothing">
+    <br><br>
+    <h6><em>Anda Belum Melakukan Pelatihan Model</em></h6>
+</div>
+<div class="something hide">
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <form action="#!" method="POST" id="predict">
+                <div class="row">
+                    <div class="input-field s12">
+                        <select name="model_id">
+                            <option value="" disabled selected>Pilih Model</option>
+                            <option value="hinge">Hinge</option>
+                            <option value="log_loss">Log loss</option>
+                            <option value="modified_huber">Modified huber</option>
+                        </select>
+                        <label>Model</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field s12">
+                        <input id="age" name="age" type="number" class="validate" min="0" required>
+                        <label for="age">Usia (Bulan)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field s12">
+                        <select name="gender">
+                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                            <option value="true">Laki-laki</option>
+                            <option value="false">Perempuan</option>
+                        </select>
+                        <label>Jenis Kelamin</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field s12">
+                        <input id="weight" name="weight" type="number" class="validate" min="0.1" step="0.1" required>
+                        <label for="weight">Berat Badan Periksa (Kg)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field s12">
+                        <input id="height" name="height" type="number" class="validate" min="0.1" step="0.1" required>
+                        <label for="height">Tinggi Badan Periksa (Cm)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field s12 center">
+                        <button class="btn waves-effect waves-light green darken-3" type="submit">Prediksi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <h4 class="center">Hasil Prediksi</h4>
+            <hr>
+            <h5 class="center"><em><span class="prediction"></span></em></h5>
+        </div>
+    </div>
+</div>
+<div class="page-slider" data-page="learning">
+    <div class="slider-nav">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+    <div class="slider-content">
+        <div class="container model-loader">
+            <img class="model-loader" src="{{ url_for('static', filename='img/loader/2.gif')}}" alt="loader">
+            <br><br>
+            <p class="model-loader"><em>Sedang Menjalankan Proses Pelatihan...</em></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const loader_urls = [
+        `{{ url_for('static', filename='img/loader/1.gif')}}`,
+        `{{ url_for('static', filename='img/loader/2.gif')}}`,
+    ]
+    const loader_text = [
+        `Sedang Menjalankan Proses Pelatihan...`,
+        `Harap Bersabar...`,
+        `Kami Jalankan Proses ini secara otomatis di belakang layar...`,
+        `Nikmati kopi anda terlebih dahulu...`,
+    ]
+</script>
+<script src="{{ url_for('static', filename='js/page/prediksi.js') }}"></script>
+{% endblock %}

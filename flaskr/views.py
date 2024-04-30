@@ -33,3 +33,10 @@ def model():
         "page/model.html",
         page="model",
     )
+
+@views.route("/prediksi")
+def prediksi():
+    return render_template(
+        "page/prediksi.html",
+        page="prediksi",
+    )

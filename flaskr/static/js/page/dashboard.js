@@ -53,5 +53,37 @@ $(document).ready(async function () {
         ],
       },
     });
+    const bbtb = [];
+    tempdata.forEach((x) => {
+      bbtb.push({
+        x: x.weight,
+        y: x.height,
+      });
+    })
+    console.log(bbtb);
+    charts.status3 = new Chart(document.getElementById("chart-status-3"), {
+      type: "scatter",
+      data: {
+        datasets: [
+          {
+            label: "Data Balita",
+            data: bbtb,
+            backgroundColor: "rgb(255, 99, 132)",
+          },
+        ],
+      },
+      options: {
+        scales: {
+          x: {
+            type: "linear",
+            position: "bottom",
+            title: { display: true, text: "Berat Badan" },
+          },
+          y: {
+            title: { display: true, text: "Tinggi Badan" },
+          },
+        },
+      },
+    });
   }
 });

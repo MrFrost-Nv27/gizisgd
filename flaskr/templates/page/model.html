@@ -97,6 +97,87 @@
         </div>
     </div>
 </div>
+<div class="page-slider" data-page="detail">
+    <div class="slider-nav">
+        <a class="waves-effect waves-light btn orange btn-slider-close"><i
+                class="material-icons left">arrow_back</i>Kembali</a>
+    </div>
+    <div class="slider-content">
+        <div class="row">
+            <h4 class="center">
+                Parameter
+            </h4>
+            <div class="col s12 m6 offset-m3">
+                <table class="striped highlight responsive-table" id="parameter">
+                    <tbody>
+                        <tr>
+                            <th>Loss Function</th>
+                            <td>: <span class="loss"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Learning Rate</th>
+                            <td>: <span class="alpha"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Iterasi Maksimal</th>
+                            <td>: <span class="max_iter"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Test Size / K-Fold</th>
+                            <td>: <span class="testsize"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <h4 class="center">Nilai Akurasi</h4>
+            <div class="center">
+                <small><em>(Akurasi tertinggi untuk penggunaan K-Fold)</em></small>
+            </div>
+            <h3 class="center"><span class="accuracy"></span></h3>
+        </div>
+        <br><br>
+        <div class="row kfold hide">
+            <h4 class="center">Hasil</h4>
+            <div class="col s12 m8 offset-m2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>K-Fold</th>
+                            <th>Prediksi Benar</th>
+                            <th>Prediksi Salah</th>
+                            <th>Total Data</th>
+                            <th>Nilai Akurasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row tts hide">
+            <h4 class="center">Hasil</h4>
+            <div class="col s12 m8 offset-m2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Testsize</th>
+                            <th>Prediksi Benar</th>
+                            <th>Prediksi Salah</th>
+                            <th>Total Data</th>
+                            <th>Nilai Akurasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block script %}

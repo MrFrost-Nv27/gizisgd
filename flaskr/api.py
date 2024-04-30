@@ -57,6 +57,7 @@ def model():
     data = Models.query.all()
     return {"data": [k.serialize() for k in data]}, 200
 
+
 @api.route("/gizi/<id>", methods=["GET", "POST", "DELETE"])
 def gizibyid(id):
     data = Gizi.query.get(id)
@@ -89,14 +90,16 @@ def gizibyid(id):
         }}, 404
     return {"data": data.serialize()}, 200
 
+
 @api.route("/model/<id>", methods=["GET", "POST"])
 def modelbyid(id):
     data = Models.query.get(id)
     if request.method == 'POST':
         # Fetch dataset as dataframe
         dataset = Gizi.query.all()
-        dataframe = pd.DataFrame.from_records([ds.serialize() for ds in dataset])
-        
+        dataframe = pd.DataFrame.from_records(
+            [ds.serialize() for ds in dataset])
+
         # split dataset to X and y variable
         X = dataframe[['age', 'gender', 'weight', 'height']].values
         y = dataframe['status'].values  # target / label
@@ -121,15 +124,15 @@ def modelbyid(id):
 
                 for j in range(len(X[test_index, :])):
                     r = Results(model_id=data.id,
-                        actual=y[test_index][j],
-                        predicted=y_pred[j])
+                                actual=y[test_index][j],
+                                predicted=y_pred[j], fold=i)
                     db.session.add(r)
                     db.session.commit()
 
             # get best accuracy
             highest_accuracy = max(accuracy_scores)
-            index = accuracy_scores.index(highest_accuracy)                   
-            
+            index = accuracy_scores.index(highest_accuracy)
+
             # dump best model to file
             dump(clfs[index], f'models/{data.id}.joblib')
 
@@ -142,22 +145,24 @@ def modelbyid(id):
                 "title": "Model berhasil di latih"
             }, "data": data.serialize()}, 200
         else:
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=data.testsize, shuffle=False)
-            clf = SGDClassifier(loss=data.loss, alpha=data.alpha, max_iter=data.max_iter, shuffle=False)
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=data.testsize, shuffle=False)
+            clf = SGDClassifier(loss=data.loss, alpha=data.alpha,
+                                max_iter=data.max_iter, shuffle=False)
             clf = clf.fit(X_train, y_train)
             y_pred = clf.predict(X_test)
 
             # safe y_pred to database
             for i in range(len(X_test)):
                 r = Results(model_id=data.id,
-                      actual=y_test[i],
-                      predicted=y_pred[i])
+                            actual=y_test[i],
+                            predicted=y_pred[i])
                 db.session.add(r)
                 db.session.commit()
-            
+
             # dump model to file
             dump(clf, f'models/{data.id}.joblib')
-            
+
             # safe accuracy and return response
             data.accuracy = accuracy_score(y_test, y_pred)
             data.learning_at = datetime.datetime.now()
@@ -173,3 +178,38 @@ def modelbyid(id):
             "title": "Data tidak ditemukan"
         }}, 404
     return {"data": data.serialize()}, 200
+
+
+@api.route("/model/data/<id>", methods=["GET"])
+def modelDatabyid(id):
+    data = Models.query.get(id)
+    if data == None:
+        return {"toast": {
+            "icon": "error",
+            "title": "Data tidak ditemukan"
+        }}, 404
+    dataset = Results.query.filter_by(model_id=data.id).all()
+    return {"data": [ds.serialize() for ds in dataset]}, 200
+
+
+@api.route("/model/predict/<id>", methods=["POST"])
+def modelPredict(id):
+    data = Models.query.get(id)
+    if data == None:
+        return {"toast": {
+            "icon": "error",
+            "title": "Model tidak ditemukan"
+        }}, 404
+    clf = load(f'models/{data.id}.joblib')
+    gender = request.form.get("gender").lower() in [
+        'true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh']
+    age = int(request.form.get("age"))
+    weight = float(request.form.get("weight"))
+    height = float(request.form.get("height"))
+    dataset = pd.DataFrame.from_records([[age, gender, weight, height]]).values
+    predict = clf.predict(dataset)
+
+    return {"toast": {
+            "icon": "success",
+            "title": "Data Berhasil diprediksi",
+            }, "data": predict.tolist(), }, 200
